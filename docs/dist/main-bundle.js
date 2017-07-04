@@ -20983,7 +20983,7 @@ function makePropTypesFormBuilder(Com) {
     pbTransformFields: function pbTransformFields(schema) {
       return schema;
     },
-    pbFormTitle: 'Form Builder',
+    pbFormTitle: 'Customize Component',
     formId: 'formId',
     uiSchema: {},
     formData: {}

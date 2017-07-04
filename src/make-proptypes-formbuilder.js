@@ -134,7 +134,7 @@ export default function makePropTypesFormBuilder(Com) {
 
   PropTypesFormBuilder.defaultProps = {
     pbTransformFields: schema => schema,
-    pbFormTitle: 'Form Builder',
+    pbFormTitle: 'Customize Component',
     formId: 'formId',
     uiSchema: {},
     formData: {},
