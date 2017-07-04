@@ -1,3 +1,4 @@
+const path = require('path');
 const env = process.env;
 
 const isUseReact = env.USE_REACT;
@@ -5,6 +6,10 @@ const isUseReact = env.USE_REACT;
 module.exports = {
   devtool: 'source-map',
   entry: `${__dirname  }/index.js`,
+  output: {
+    path: path.join(__dirname, './dist'),
+    filename: '[name]-bundle.js',
+  },
   resolve: {
     alias: isUseReact ? {} : {
       react: 'preact-compat',
