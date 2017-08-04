@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "asap": "^2.0.5",
+    "lodash": "^4.17.4",
     "prop-types": "^15.5.10"
   }
 }

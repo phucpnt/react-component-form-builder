@@ -4,7 +4,7 @@ const propBuilderByGroup = {};
 window.propBuilderByGroup = propBuilderByGroup;
 
 const nextAfterMount = options.afterMount;
-options.afterMount = component => {
+options.afterMount = (component) => {
   if (component.context && component.context.propBuilderGroup) {
     const group = component.context.propBuilderGroup;
     propBuilderByGroup[group] = propBuilderByGroup[group] ? propBuilderByGroup[group].concat(component) : [component];

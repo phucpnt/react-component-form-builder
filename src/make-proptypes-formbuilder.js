@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 import Form from 'react-jsonschema-form';
 import asap from 'asap';
 
-import { mapPropTypesToJsonSchema } from './build-form-fields-schema';
+import './proptype-wrapper';
+import mapPropTypesToJsonSchema from './map-prop-types2json-schema';
 import SchemaFieldTab from './rjsf-schema-field-tab';
 
 const css = require('./formframe.css').toString();
@@ -46,8 +47,10 @@ export default function makePropTypesFormBuilder(Com) {
 
     render() {
       return (<div id="react-component-formbuilder">
-        <div style={{ marginLeft: '420px' }} className="component-container" ref={(container) => { this.itemContainer = container; }}></div>
-        <div style={{ position: 'fixed', width: '30%', maxWidth: '420px', left: 0, top: 0, bottom: 0 }} className="form-container">
+        <div style={{ marginLeft: '420px' }}
+          className="component-container" ref={(container) => { this.itemContainer = container; }}></div>
+        <div style={{ position: 'fixed', width: '30%', maxWidth: '420px', left: 0, top: 0, bottom: 0 }}
+          className="form-container">
           <iframe ref={(container) => { this.formContainer = container; }}
             style={{ border: 0, width: '100%', height: '100%' }}></iframe>
         </div>
@@ -75,7 +78,7 @@ export default function makePropTypesFormBuilder(Com) {
       const formSchema = {
         title: this.props.pbFormTitle,
         type: 'object',
-        properties: mapPropTypesToJsonSchema(this.props.getFormPropTypes(), this.props.formData),
+        properties: mapPropTypesToJsonSchema(this.props.getFormPropTypes()),
       };
 
       // TODO: expose maps between the props & field value
