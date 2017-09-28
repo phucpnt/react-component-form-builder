@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-// import './inject-react';
-// import './inject-preact';
+import './stub/inject-preact';
+
 
 import PropTypes from 'prop-types';
 import Form from 'react-jsonschema-form';
@@ -15,20 +15,51 @@ import SchemaFieldTab from './rjsf-schema-field-tab';
 const css = require('./formframe.css').toString();
 
 export default function makePropTypesFormBuilder(Com) {
+  class ContextDelegate extends Component {
+    getChildContext() {
+      return this.props.context || {};
+    }
+    render() {
+      return this.props.children();
+    }
+  }
+  ContextDelegate.contextTypes = {
+    propBuilderGroup: PropTypes.func,
+  };
+
+
   class PropTypesFormBuilder extends Component {
     constructor(props) {
       super(props);
       this.itemContainer = null;
       this.showForm = this.showForm.bind(this);
       this.state = Object.assign({}, props);
+      this.customizableTarget = null;
+
+      this.componentList = [];
+      this.contextDelegate = {
+        propBuilderGroup: (component) => {
+          this.componentList.push(component);
+        },
+      };
+
       delete (this.state.ref);
     }
 
     componentDidUpdate() {
-      render(<Com {...this.state} />, this.itemContainer);
+      render(
+        <ContextDelegate context={this.contextDelegate} children={() => {
+          return (<Com {...this.state} />);
+        }}/>
+        , this.itemContainer);
     }
     componentDidMount() {
-      render(<Com {...this.state} />, this.itemContainer);
+      render(
+        <ContextDelegate context={this.contextDelegate} children={() => {
+          return (<Com {...this.state} />);
+        }}/>
+        , this.itemContainer);
+
       asap(() => {
         this.showForm(this.props.uiSchema);
       });
@@ -95,21 +126,6 @@ export default function makePropTypesFormBuilder(Com) {
       } else {
         uiSchema = customUISchema;
       }
-
-      // uiSchema = Object.assign({}, uiSchema, customUISchema);
-
-      // const containerId = `prop-builder-form---${this.props.formId}`;
-      // let container = document.getElementById(containerId);
-      // if (!container) {
-      //   container = document.createElement('div');
-      //   container.id = `prop-builder-form---${this.props.formId}`;
-      //   container.className = 'container-fluid';
-      //   document.body.appendChild(container);
-      // }
-
-      // if (container.firstChild) {
-      //   container.removeChild(container.firstChild);
-      // }
 
       const handleSubmit = (data) => {
         console.log('>>> submit', data);

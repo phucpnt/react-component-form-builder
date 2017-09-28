@@ -11,9 +11,12 @@ module.exports = {
     filename: '[name]-bundle.js',
   },
   resolve: {
-    alias: isUseReact ? {} : {
+    alias: isUseReact ? {
+      'react-native': 'p-react-native-web',
+    } : {
       react: 'preact-compat',
       'react-dom': 'preact-compat',
+      'react-native': 'p-react-native-web',
     },
   },
   module: {
